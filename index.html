@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAPEPOINT ULTRA PREMIUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:#000;color:#fff;overflow-x:hidden;cursor:none;}
+
+/* LOADING SCREEN */
+#loader{
+position:fixed;width:100%;height:100%;background:#000;
+display:flex;justify-content:center;align-items:center;z-index:9999;
+}
+#loader h1{
+font-size:50px;color:#00ff99;letter-spacing:5px;animation:pulse 1.5s infinite;
+}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* VIDEO BG */
+.bg-wrap{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-5;overflow:hidden;}
+.bg-wrap video{width:100%;height:100%;object-fit:cover;filter:brightness(0.6) contrast(1.2);}
+
+/* PARALLAX LAYERS */
+.parallax{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-4;}
+.layer{position:absolute;width:120%;height:120%;background:radial-gradient(circle, rgba(0,255,153,0.15), transparent 70%);}
+
+/* OVERLAY */
+.overlay{position:fixed;width:100%;height:100%;background:linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9));z-index:-3;pointer-events:none;}
+
+/* HEADER */
+header{position:fixed;top:0;width:100%;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.1);z-index:10;}
+.logo img{height:50px;}
+
+/* HERO */
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.hero h1{font-size:100px;letter-spacing:6px;overflow:hidden;white-space:nowrap;}
+.timer{margin-top:20px;font-size:32px;color:#00ff99;}
+
+/* SECTIONS */
+.section{width:85%;margin:120px auto;padding:60px;border-radius:30px;backdrop-filter:blur(30px);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);opacity:0;transform:scale(0.95);transition:1s;}
+.section.active{opacity:1;transform:scale(1);}
+
+/* STICKY */
+.sticky{height:200vh;position:relative;}
+.sticky-content{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;font-size:60px;text-align:center;}
+
+/* PRODUCTS */
+.products{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
+.product{width:260px;height:200px;border-radius:25px;background:rgba(255,255,255,0.05);backdrop-filter:blur(25px);display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;transition:0.3s;transform-style:preserve-3d;position:relative;}
+.product:hover{background:rgba(0,255,153,0.2);}
+.product .buttons{position:absolute;bottom:15px;display:flex;gap:10px;opacity:0;transition:0.3s;}
+.product:hover .buttons{opacity:1;}
+.product .btn{padding:8px 15px;border-radius:30px;background:#00ff99;color:#000;font-weight:700;text-decoration:none;}
+
+/* CURSOR */
+.cursor{position:fixed;width:20px;height:20px;border-radius:50%;background:#00ff99;pointer-events:none;z-index:999;mix-blend-mode:difference;transition:transform 0.05s;}
+
+/* FADE UP */
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+
+<body>
+<div id="loader"><h1>VAPEPOINT</h1></div>
+<div class="cursor"></div>
+
+<div class="bg-wrap">
+<video autoplay muted loop playsinline>
+<source src="bg.mp4" type="video/mp4">
+</video>
+</div>
+
+<div class="parallax">
+<div class="layer" id="layer1"></div>
+<div class="layer" id="layer2"></div>
+</div>
+
+<div class="overlay"></div>
+
+<header><div class="logo"><img src="logo.png"></div></header>
+
+<section class="hero">
+<h1 id="typing"></h1>
+<div class="timer" id="timer"></div>
+</section>
+
+
+<section class="section" id="about">
+<h2>Відкриття</h2>
+<p>23 липня 2026. Тучин. Найкращі рідини та картриджі.</p>
+</section>
+
+<section class="section" id="products">
+<h2>Товари</h2>
+<div class="products">
+<div class="product">Рідини
+<div class="buttons"><a href="#" class="btn">Купити</a><a href="#" class="btn">Деталі</a></div>
+</div>
+<div class="product">Картриджі
+<div class="buttons"><a href="#" class="btn">Купити</a><a href="#" class="btn">Деталі</a></div>
+</div>
+<div class="product">Аксесуари
+<div class="buttons"><a href="#" class="btn">Купити</a><a href="#" class="btn">Деталі</a></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Telegram</h2>
+<a class="btn" href="https://t.me/+dbnUJOAGIrk0ZThi" target="_blank">Перейти</a>
+</section>
+
+<script>
+// LOADER
+window.addEventListener("load",()=>{
+setTimeout(()=>document.getElementById("loader").style.display="none",1000);
+});
+
+// TYPING EFFECT
+const typingEl=document.getElementById("typing");
+const text="VAPEPOINT";
+let index=0;
+function typeWriter(){
+if(index<text.length){
+typingEl.innerHTML+=text.charAt(index);
+index++;
+setTimeout(typeWriter,200);
+}}
+typeWriter();
+
+// TIMER
+const timer=document.getElementById("timer");
+const openDate=new Date("July 23, 2026 00:00:00").getTime();
+setInterval(()=>{
+let now=new Date().getTime();
+let diff=openDate-now;
+let d=Math.floor(diff/(1000*60*60*24));
+let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((diff%(1000*60*60))/(1000*60));
+timer.innerHTML=`${d} днів ${h} год ${m} хв`;
+},1000);
+
+// SCROLL + PARALLAX + FADE
+const sections=document.querySelectorAll(".section");
+window.addEventListener("scroll",()=>{
+let scroll=window.scrollY;
+document.getElementById("layer1").style.transform=`translateY(${scroll*0.15}px)`;
+document.getElementById("layer2").style.transform=`translateY(${scroll*0.3}px)`;
+sections.forEach(sec=>{
+if(sec.getBoundingClientRect().top<window.innerHeight-100) sec.classList.add("active");
+});
+});
+
+// CURSOR
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+// 3D PRODUCT HOVER
+document.querySelectorAll(".product").forEach(card=>{
+card.addEventListener("mousemove",(e)=>{
+let r=card.getBoundingClientRect();
+let x=e.clientX-r.left;
+let y=e.clientY-r.top;
+let rx=(y/r.height-0.5)*12;
+let ry=(x/r.width-0.5)*-12;
+card.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+});
+card.addEventListener("mouseleave",()=>card.style.transform="rotateX(0) rotateY(0)");
+});
+
+// SMOKE FOLLOW CURSOR
+document.addEventListener("mousemove",(e)=>{
+const smoke=document.createElement("div");
+smoke.style.position="fixed";
+smoke.style.left=e.clientX+"px";
+smoke.style.top=e.clientY+"px";
+smoke.style.width="40px";
+smoke.style.height="40px";
+smoke.style.background="radial-gradient(circle, rgba(0,255,153,0.2), transparent 70%)";
+smoke.style.borderRadius="50%";
+smoke.style.pointerEvents="none";
+smoke.style.zIndex="2";
+smoke.style.animation="fadeSmoke 1s forwards";
+document.body.appendChild(smoke);
+setTimeout(()=>smoke.remove(),1000);
+});
+
+const style=document.createElement("style");
+style.innerHTML=`@keyframes fadeSmoke{0%{opacity:0.8;transform:scale(0.2)}100%{opacity:0;transform:scale(2)}}`;
+document.head.appendChild(style);
+
+// SCROLL ZOOM EFFECT
+window.addEventListener("scroll",()=>{
+document.querySelectorAll(".section").forEach(sec=>{
+let rect=sec.getBoundingClientRect();
+let scale=1 + (1 - Math.min(Math.max(rect.top/window.innerHeight,0),1))*0.05;
+sec.style.transform=`scale(${scale})`;
+});
+});
+</script>
+
+</body>
+</html>
